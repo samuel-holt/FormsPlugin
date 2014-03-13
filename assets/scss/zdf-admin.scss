@@ -1,0 +1,50 @@
+.zd-form-options-block {
+
+  section {
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #ddd;
+  }
+
+  input[type="submit"] {
+    display: block;
+    margin-top: 20px;
+  }
+}
+
+.zdf-form-group {
+  margin: 10px 0;
+//  width: 50%;
+  display: inline-block;
+
+  &.sortable {
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+  }
+}
+
+#sortable-inputs {
+  .sortable {
+    &:hover {
+      cursor: move;
+    }
+  }
+}
+
+.remove-input {
+  display: inline-block;
+  background-color: #D00;
+  color: #FFF;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  line-height: 15px;
+  text-decoration: none;
+  border-radius: 7px;
+
+  &:hover {
+    color: #fff;
+    background-color: #f00;
+  }
+}

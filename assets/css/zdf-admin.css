@@ -1,0 +1,46 @@
+/* line 3, ../scss/zdf-admin.scss */
+.zd-form-options-block section {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #ddd;
+}
+/* line 9, ../scss/zdf-admin.scss */
+.zd-form-options-block input[type="submit"] {
+  display: block;
+  margin-top: 20px;
+}
+
+/* line 15, ../scss/zdf-admin.scss */
+.zdf-form-group {
+  margin: 10px 0;
+  display: inline-block;
+}
+/* line 20, ../scss/zdf-admin.scss */
+.zdf-form-group.sortable {
+  padding: 10px;
+  background-color: #fff;
+  border: 1px solid #ddd;
+}
+
+/* line 29, ../scss/zdf-admin.scss */
+#sortable-inputs .sortable:hover {
+  cursor: move;
+}
+
+/* line 35, ../scss/zdf-admin.scss */
+.remove-input {
+  display: inline-block;
+  background-color: #D00;
+  color: #FFF;
+  width: 15px;
+  height: 15px;
+  text-align: center;
+  line-height: 15px;
+  text-decoration: none;
+  border-radius: 7px;
+}
+/* line 46, ../scss/zdf-admin.scss */
+.remove-input:hover {
+  color: #fff;
+  background-color: #f00;
+}
