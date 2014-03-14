@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Laura
+ * User: Sam
  * Date: 13/03/14
  * Time: 9:53 AM
  */
@@ -49,13 +49,22 @@ class ZDFormsMenus {
 
         $html .= $this->form->get_input(array(
             'label' => __('Form name', 'zdf'),
-            'wrapper' => 'p'
+            'wrapper' => 'p',
+            'multiline' => true
         ));
 
         $html .= $this->form->get_input(array(
             'label' => __('Page(s) to display form', 'zdf'),
             'placeholder' => __('Comma-separated list', 'zdf'),
-            'wrapper' => 'p'
+            'wrapper' => 'p',
+            'multiline' => true
+        ));
+
+        $html .= $this->form->get_input(array(
+            'label' => __('Email address(s) to send the messages to', 'zdf'),
+            'id' => 'target-email',
+            'name' => 'target_email',
+            'multiline' => true
         ));
 
         $html .= "</section>\n";

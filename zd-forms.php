@@ -35,9 +35,9 @@ require_once( plugin_dir_path( __FILE__ ) . 'class/FormHelper.php');
 require_once( plugin_dir_path( __FILE__ ) . 'class/FormBuilder.php');
 require_once( plugin_dir_path( __FILE__ ) . 'class/shortcodes.php');
 
-add_action('init', 'zdf_run');
+add_action('init', 'zdf_init');
 
-function zdf_run() {
+function zdf_init() {
 
 //    $form_helper = new FormHelper();
 

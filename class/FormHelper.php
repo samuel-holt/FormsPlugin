@@ -64,7 +64,7 @@ class FormHelper {
     }
 
     function get_input($args=array()) {
-        $echo = $html = $wrapper = $label_class = $id = $label = $type = $name = $wrapper_class = $placeholder = $form_name = $value = $options = $required = $error = $rows = $cols = $disabled = $input_class = null;
+        $echo = $html = $wrapper = $label_class = $id = $label = $type = $name = $wrapper_class = $placeholder = $form_name = $value = $options = $required = $error = $rows = $cols = $disabled = $input_class = $multiline = null;
 
         $before = $after = '';
 
@@ -85,7 +85,9 @@ class FormHelper {
             'error'         => false,
             'rows'          => false,
             'cols'          => false,
-            'disabled'      => false
+            'disabled'      => false,
+            'multiline'     => false
+
         ), $args) );
 
         $form_name = $this->form_slug;
@@ -164,6 +166,10 @@ class FormHelper {
         //If it is a button, don't add a label
         if( ! $is_button ) {
             $html .= "<label{$_label_class} for=\"{$_id}\">{$label}</label>\n";
+        }
+
+        if( $multiline ) {
+            $html .= "<br/>\n";
         }
 
         //If it is a textarea, format as textarea

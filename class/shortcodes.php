@@ -1,7 +1,7 @@
 <?php
 /**
  * Created by PhpStorm.
- * User: Laura
+ * User: Sam
  * Date: 13/03/14
  * Time: 10:26 AM
  */
@@ -30,10 +30,6 @@ class ZDFormsShortcodes {
 
         $html .= $form->get_input(array(
             'label' => __('Email address', 'zdf')
-        ));
-
-        $html .= $form->get_input(array(
-            'label' => __('Full name','zdf')
         ));
 
         $html .= $form->get_input(array(

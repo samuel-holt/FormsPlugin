@@ -24,9 +24,9 @@ class ZDFormsAjax {
 
             $form_data = $_POST['zdf_form_data'];
 
-            echo '<pre>';
-            print_r($form_data);
-            echo '</pre>';
+//            echo '<pre>';
+//            print_r($form_data);
+//            echo '</pre>';
 
             die();
 

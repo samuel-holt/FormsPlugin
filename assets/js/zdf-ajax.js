@@ -4,10 +4,10 @@
 
 jQuery(document).ready(function($){
 
-    if( $('.zd-form').length ) {
+    if( $('.zd-form-ajax').length ) {
 
 
-        $('.zd-form').on('submit', prepareMessage);
+        $('.zd-form-ajax').on('submit', prepareMessage);
 
 
     }
