@@ -145,13 +145,30 @@ class ZDFormsMenus {
 
         $page_titles = get_option('page_titles') ? get_option('page_titles') : 'Contact us';
 
-        $form_pages = explode(',', $page_titles);
+        if( strpos($page_titles, ',') === false ) {
+            $page = get_page_by_title($page_titles);
 
-        foreach($form_pages as $form_page) {
-            $p = get_page_by_title($form_page);
-            if( $p->ID )
-                $display[] = $p->ID;
+            if( ! $page ) {
+                return;
+            }
+            else {
+                $display[] = $page->ID;
+            }
+
         }
+        else {
+            $form_pages = explode(',', $page_titles);
+
+            foreach($form_pages as $form_page) {
+                $p = get_page_by_title($form_page);
+                if( $p->ID )
+                    $display[] = $p->ID;
+            }
+
+        }
+
+
+
 
         if( in_array($post->ID, $display) ) {
             add_meta_box(

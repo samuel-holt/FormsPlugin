@@ -27,6 +27,8 @@
 
 define( 'ZDF_TEXT_DOMAIN', 'zdf' );
 
+require_once( plugin_dir_path( __FILE__ ) . 'class/validate.php');
+require_once( plugin_dir_path( __FILE__ ) . 'class/send.php');
 require_once( plugin_dir_path( __FILE__ ) . 'class/ajax.php');
 require_once( plugin_dir_path( __FILE__ ) . 'class/install.php');
 require_once( plugin_dir_path( __FILE__ ) . 'class/settings.php');

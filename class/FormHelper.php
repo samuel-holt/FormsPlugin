@@ -12,6 +12,7 @@ class FormHelper {
     private $form_slug;
     private $form_action;
     private $form_class;
+    private $is_ajax;
 
     public function __construct( $form_settings=null ) {
         $form_name = $form_action = $is_ajax = null;
@@ -33,7 +34,9 @@ class FormHelper {
 
         $this -> form_action = $form_action;
 
-        $this -> form_class = $is_ajax ? "zd-form-ajax" : "zd-form";
+        $this -> form_class = $is_ajax ? "zd-form zd-form-ajax" : "zd-form";
+
+        $this -> is_ajax = $is_ajax;
     }
 
     function start_form($echo=1) {
@@ -64,7 +67,9 @@ class FormHelper {
     }
 
     function get_input($args=array()) {
-        $echo = $html = $wrapper = $label_class = $id = $label = $type = $name = $wrapper_class = $placeholder = $form_name = $value = $options = $required = $error = $rows = $cols = $disabled = $input_class = $multiline = null;
+        $echo = $html = $wrapper = $label_class = $id = $label = $type = $name = $wrapper_class = $placeholder =
+        $form_name = $value = $options = $required = $error = $rows = $cols = $disabled = $input_class = $multiline =
+            $validate = null;
 
         $before = $after = '';
 
@@ -86,7 +91,8 @@ class FormHelper {
             'rows'          => false,
             'cols'          => false,
             'disabled'      => false,
-            'multiline'     => false
+            'multiline'     => false,
+            'validate'      => false
 
         ), $args) );
 
@@ -124,9 +130,10 @@ class FormHelper {
 
             //if the form name has been provided,
             //Format the name as a property of the form name
-            if( '' !== $form_name  ) {
-                $_name = "{$form_name}[{$_name}]";
-            }
+//            if( '' !== $form_name  ) {
+//                $_name = "{$form_name}[{$_name}]";
+//            }
+
         }
         else {
             $_name = $name;
@@ -151,6 +158,10 @@ class FormHelper {
         $_disabled = $disabled ? " disabled" : "";
 
         $_input_class = ('' !== $input_class) ? $input_class : '';
+
+        if( $error ) {
+            $_input_class .= ' error';
+        }
 
         //Concatenate common attributes for reuse
         $attributes = "class=\"{$_input_class}\" type=\"{$type}\" id=\"{$_id}\" name=\"{$_name}\"{$_required}{$_disabled}";
