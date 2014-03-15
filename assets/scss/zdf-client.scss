@@ -1,10 +1,15 @@
 .zd-form {
-  select, input, textarea {
+  select,
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  textarea {
     &.error {
       border: 1px solid #d00;
     }
 
     display: block;
+    width: 100%;
   }
 
   span.error {

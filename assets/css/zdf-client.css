@@ -1,24 +1,33 @@
-/* line 2, ../scss/zdf-client.scss */
-.zd-form select, .zd-form input, .zd-form textarea {
+/* line 6, ../scss/zdf-client.scss */
+.zd-form select,
+.zd-form input[type="text"],
+.zd-form input[type="email"],
+.zd-form input[type="password"],
+.zd-form textarea {
   display: block;
+  width: 100%;
 }
-/* line 3, ../scss/zdf-client.scss */
-.zd-form select.error, .zd-form input.error, .zd-form textarea.error {
+/* line 7, ../scss/zdf-client.scss */
+.zd-form select.error,
+.zd-form input[type="text"].error,
+.zd-form input[type="email"].error,
+.zd-form input[type="password"].error,
+.zd-form textarea.error {
   border: 1px solid #d00;
 }
-/* line 10, ../scss/zdf-client.scss */
+/* line 15, ../scss/zdf-client.scss */
 .zd-form span.error {
   display: block;
   color: #d00;
 }
 
-/* line 16, ../scss/zdf-client.scss */
+/* line 21, ../scss/zdf-client.scss */
 .sr-only {
   clip: rect(1px, 1px, 1px, 1px);
   position: absolute;
 }
 
-/* line 21, ../scss/zdf-client.scss */
+/* line 26, ../scss/zdf-client.scss */
 .sr-only:focus {
   background-color: #f1f1f1;
   border-radius: 3px;

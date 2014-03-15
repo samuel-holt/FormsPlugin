@@ -11,6 +11,7 @@
 class ZDFormsShortcodes {
     public function __construct() {
         add_shortcode('zd-contact-form', array($this, 'zdf_display_form') );
+        add_shortcode('zd-input-field', array($this, 'zdf_input_field') );
     }
 
     function zdf_display_form($atts) {
@@ -92,7 +93,12 @@ class ZDFormsShortcodes {
         //Cache HTML results for faster speediness
 
         return $html;
+    }
 
-
+    function zdf_input_field( $atts ) {
+        extract( shortcode_atts(
+            Settings::get_form_defaults(),
+            $atts
+        ) );
     }
 } 

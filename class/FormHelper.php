@@ -73,28 +73,8 @@ class FormHelper {
 
         $before = $after = '';
 
-        extract( $this->check_defaults(array(
-            'type'          => 'text',
-            'id'            => '',
-            'name'          => '',
-            'label'         => '',
-            'label_class'   => 'sr-only',
-            'value'         => '',
-            'input_class'   => '',
-            'wrapper'       => false,
-            'wrapper_class' => false,
-            'echo'          => false,
-            'placeholder'   => '',
-            'options'       => array(),
-            'required'      => false,
-            'error'         => false,
-            'rows'          => false,
-            'cols'          => false,
-            'disabled'      => false,
-            'multiline'     => false,
-            'validate'      => false
-
-        ), $args) );
+        extract( $this->check_defaults(
+            Settings::get_form_defaults(), $args) );
 
         $form_name = $this->form_slug;
 
@@ -122,6 +102,12 @@ class FormHelper {
 
         // Strip all non-alphanumeric characters from the ID
         $_id = preg_replace("/[^A-Za-z0-9- ]/", '', $_id);
+        // If the label contains the word 'email', make the input type email
+        $contains_email = strpos( strtolower($label), "email" );
+
+        if( 'text' === $type && ($contains_email !== false) ) {
+            $type = 'email';
+        }
 
         //If the name is not set
         if( '' === $name ) {
@@ -133,18 +119,13 @@ class FormHelper {
 //            if( '' !== $form_name  ) {
 //                $_name = "{$form_name}[{$_name}]";
 //            }
+//            $_name .= "[{$type}]";
 
         }
         else {
             $_name = $name;
         }
 
-        // If the label contains the word 'email', make the input type email
-        $contains_email = strpos( strtolower($label), "email" );
-
-        if( 'text' === $type && ($contains_email !== false) ) {
-            $type = 'email';
-        }
 
         // If the label class is still a string (ie. not false), format the class attr.
         $_label_class = is_string($label_class) ? " class=\"{$label_class}\"" : '';
@@ -153,18 +134,18 @@ class FormHelper {
         $_placeholder = ('' !== $placeholder) ? $placeholder : $label;
 
         // Add HTML5 required attribute if required
-        $_required = ($required) ? " required" : "";
+        $_required = ($required) ? " required aria-required=\"true\"" : "";
 
         $_disabled = $disabled ? " disabled" : "";
 
-        $_input_class = ('' !== $input_class) ? $input_class : '';
+//        $_input_class = ('' !== $input_class) ? $input_class : '';
 
         if( $error !== false ) {
-            $_input_class .= ' error';
+            $input_class .= ' error';
         }
 
         //Concatenate common attributes for reuse
-        $attributes = "class=\"{$_input_class}\" type=\"{$type}\" id=\"{$_id}\" name=\"{$_name}\"{$_required}{$_disabled}";
+        $attributes = "class=\"{$input_class}\" type=\"{$type}\" id=\"{$_id}\" name=\"{$_name}\"{$_required}{$_disabled}";
 
         //If the input type is not select or checkbox, add the placeholder attr.
         if( ! in_array( $type, array('select', 'checkbox' )) ) {

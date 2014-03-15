@@ -42,14 +42,17 @@ class ZDFormsAjax {
 
             $clean_data = array_map( 'esc_html', $form_data_assoc );
 
-            extract($clean_data);
+//            extract($clean_data);
 //            $errors = $this->validate_form;
             $errors = array();
-            $errors['email_address']    = $this->val->email($email_address, true);
-            $errors['full_name']        = $this->val->text($full_name, true);
-            $errors['company_name']     = $this->val->text($company_name);
-            $errors['contact_purpose']  = $this->val->select($contact_purpose, true);
-            $errors['message']          = $this->val->text($message, true);
+//            $errors['email_address']    = $this->val->email($email_address, true);
+//            $errors['full_name']        = $this->val->text($full_name, true);
+//            $errors['company_name']     = $this->val->text($company_name);
+//            $errors['contact_purpose']  = $this->val->select($contact_purpose, true);
+//            $errors['message']          = $this->val->text($message, true);
+//            foreach( $clean_data as $field => $type ) {
+//                $errors[$field] = $this->val->$type($field);
+//            }
 
             foreach( $errors as $error ) {
                 if( $error ) {
