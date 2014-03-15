@@ -31,9 +31,36 @@ jQuery(document).ready(function($){
         $.post(
             zdf_ajax_object.ajax_url,
             _postData,
-            function(response) {
-                console.log( response );
-                var data = JSON.parse(response);
+            function( response, textStatus ) {
+//                console.log( response, textStatus );
+                console.log(textStatus);
+                if( textStatus === 'success') {
+                    var data = JSON.parse(response);
+                    if( data.sent ) {
+//                        console.log(data);
+                        console.log('Message sent');
+                    }
+                    else {
+                        console.log(data.errors);
+                        console.log('Message not sent');
+
+                        for(var error in data.errors) {
+                            console.log(error);
+                            if( data.errors[error] ) {
+                                var id = '#' + error.replace('_', '-');
+                                $(id).addClass('error');
+                                $(id + '-error').text(data.errors[error]);
+
+                            }
+                        }
+
+                    }
+                }
+                else {
+                    console.log('Message not able to send');
+                }
+
+
 
             }
         );

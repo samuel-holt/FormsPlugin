@@ -85,6 +85,26 @@ class ZDFormsValidate {
         return false;
     }
 
+    // Validate the form
+
+    function validate_form( $form_data ) {
+        $errors = array();
+        $valid = true;
+
+        foreach( $form_data as $field => $value ) {
+            $errors[$field] = $this->text( $value );
+        }
+
+        foreach($errors as $error) {
+            if( $error ) {
+                $valid = false;
+                break;
+            }
+        }
+
+        return $valid ? $valid : $errors;
+    }
+
     function is_alphanumeric($str) {
         if( ctype_alnum($str) ) {
             return 'Please only enter alpha-numeric characters';

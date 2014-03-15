@@ -66,10 +66,16 @@ class ZDFormsAjax {
             }
             else {
                 if( $this->sender->send_message($clean_data) ) {
-                    @die(json_encode(array( 'sent' => true )));
+                    @die(json_encode(array(
+                        'sent' => true,
+                        'errors' => false
+                    )));
                 }
                 else {
-                    @die(json_encode(array( 'sent' => false )));
+                    @die(json_encode(array(
+                        'sent' => false,
+                        'errors' => false
+                    )));
                 }
             }
         }

@@ -159,7 +159,7 @@ class FormHelper {
 
         $_input_class = ('' !== $input_class) ? $input_class : '';
 
-        if( $error ) {
+        if( $error !== false ) {
             $_input_class .= ' error';
         }
 
@@ -207,9 +207,9 @@ class FormHelper {
             $html .= "<input {$attributes} />\n";
         }
 
-        if( $error ) {
-            $html .= "<span id=\"{$id}-error\" class=\"error\">{$error}</span>\n";
-        }
+//        if( $error ) {
+        $html .= "<span id=\"{$id}-error\" class=\"error\">{$error}</span>\n";
+//        }
 
         $html .= $after;
 
