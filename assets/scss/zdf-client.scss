@@ -4,7 +4,7 @@
   input[type="email"],
   input[type="password"],
   textarea {
-    &.error {
+    &.zdf-error {
       border: 1px solid #d00;
     }
 
@@ -12,9 +12,27 @@
     width: 100%;
   }
 
-  span.error {
+  span.zdf-error {
     display: block;
     color: #d00;
+  }
+
+
+}
+
+.zd-form-ajax {
+  input[type="submit"] {
+    &.sending {
+      background-color: orange;
+    }
+
+    &.sent {
+      background-color: #008000;
+    }
+
+    &.not-sent {
+      background-color: #d00;
+    }
   }
 }
 

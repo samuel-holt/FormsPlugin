@@ -8,26 +8,39 @@
   width: 100%;
 }
 /* line 7, ../scss/zdf-client.scss */
-.zd-form select.error,
-.zd-form input[type="text"].error,
-.zd-form input[type="email"].error,
-.zd-form input[type="password"].error,
-.zd-form textarea.error {
+.zd-form select.zdf-error,
+.zd-form input[type="text"].zdf-error,
+.zd-form input[type="email"].zdf-error,
+.zd-form input[type="password"].zdf-error,
+.zd-form textarea.zdf-error {
   border: 1px solid #d00;
 }
 /* line 15, ../scss/zdf-client.scss */
-.zd-form span.error {
+.zd-form span.zdf-error {
   display: block;
   color: #d00;
 }
 
-/* line 21, ../scss/zdf-client.scss */
+/* line 25, ../scss/zdf-client.scss */
+.zd-form-ajax input[type="submit"].sending {
+  background-color: orange;
+}
+/* line 29, ../scss/zdf-client.scss */
+.zd-form-ajax input[type="submit"].sent {
+  background-color: #008000;
+}
+/* line 33, ../scss/zdf-client.scss */
+.zd-form-ajax input[type="submit"].not-sent {
+  background-color: #d00;
+}
+
+/* line 39, ../scss/zdf-client.scss */
 .sr-only {
   clip: rect(1px, 1px, 1px, 1px);
   position: absolute;
 }
 
-/* line 26, ../scss/zdf-client.scss */
+/* line 44, ../scss/zdf-client.scss */
 .sr-only:focus {
   background-color: #f1f1f1;
   border-radius: 3px;

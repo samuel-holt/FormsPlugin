@@ -80,7 +80,7 @@ class FormHelper {
 
         // if type is select, but no options have been provided, return error
         if('select' === $type && empty($options)) {
-            echo '<p class="error">Error: Select input requires options</p>';
+            echo '<p class="zdf-error">Error: Select input requires options</p>';
             return false;
         }
 
@@ -141,7 +141,7 @@ class FormHelper {
 //        $_input_class = ('' !== $input_class) ? $input_class : '';
 
         if( $error !== false ) {
-            $input_class .= ' error';
+            $input_class .= ' zdf-error';
         }
 
         //Concatenate common attributes for reuse
@@ -189,7 +189,7 @@ class FormHelper {
         }
 
 //        if( $error ) {
-        $html .= "<span id=\"{$id}-error\" class=\"error\">{$error}</span>\n";
+        $html .= "<span id=\"{$id}-error\" class=\"zdf-error\">{$error}</span>\n";
 //        }
 
         $html .= $after;

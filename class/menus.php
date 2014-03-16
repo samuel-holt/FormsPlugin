@@ -45,7 +45,7 @@ class ZDFormsMenus {
         $html .= $this->form->get_start_form();
 
         //Where to display the form section
-        $html .= "<section>\n";
+        $html .= "<section class=\"zdf-admin-options\">\n";
 
         $html .= $this->form->get_input(array(
             'label' => __('Form name', 'zdf'),
