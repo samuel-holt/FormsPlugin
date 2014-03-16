@@ -31,6 +31,10 @@ class ZDFormsValidate {
         return false;
     }
 
+    function textarea($str, $required=false) {
+        return $this->text($str, $required);
+    }
+
     // Email
     function email( $str, $required=false ) {
         if( $required ) {
@@ -82,6 +86,10 @@ class ZDFormsValidate {
         if( ! $this->is_empty( $str )) {
             return __('This field should not be filled in!','zdf');
         }
+        return false;
+    }
+
+    function hidden( $str ) {
         return false;
     }
 

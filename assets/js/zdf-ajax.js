@@ -5,11 +5,7 @@
 jQuery(document).ready(function($){
 
     if( $('.zd-form-ajax').length ) {
-
-
         var theForm = $('.zd-form-ajax').on('submit', prepareMessage);
-
-
     }
 
     function prepareMessage() {
@@ -33,8 +29,8 @@ jQuery(document).ready(function($){
             zdf_ajax_object.ajax_url,
             _postData,
             function( response, textStatus ) {
-                console.log( response );
-                console.log(textStatus);
+//                console.log( response );
+//                console.log(textStatus);
                 if( textStatus === 'success') {
                     var data = JSON.parse(response);
                     if( data.sent ) {
@@ -42,8 +38,8 @@ jQuery(document).ready(function($){
                         console.log('Message sent');
                     }
                     else {
-                        console.log(data.errors);
-                        console.log('Message not sent');
+//                        console.log(data.errors);
+//                        console.log('Message not sent');
 
                         for(var error in data.errors) {
                             console.log(error);
@@ -54,15 +50,11 @@ jQuery(document).ready(function($){
 
                             }
                         }
-
                     }
                 }
                 else {
                     console.log('Message not able to send');
                 }
-
-
-
             }
         );
     }

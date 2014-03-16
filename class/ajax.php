@@ -28,19 +28,21 @@ class ZDFormsAjax {
     function zdf_ajax_send_callback() {
         $valid = true;
         if( isset($_POST['zdf_form_data']) ) {
-//            die(json_encode($_POST['zdf_form_data']));
+//            die(print_r($_POST['zdf_form_data']));
             $email_address = $full_name = $company_name = $contact_purpose = $message = null;
-            $form_data_assoc = array();
-            $form_data = explode('&', $_POST['zdf_form_data']);
-
-            foreach($form_data as $data ) {
-                $d = explode('=', $data);
-                $form_data_assoc[$d[0]] = $d[1];
-            }
+            $post_data = $_POST['zdf_form_data'];
+//            die(print_r($post_data));
+//            $form_data_assoc = array();
+//            $form_data = explode('&', $_POST['zdf_form_data']);
+//
+//            foreach($form_data as $data ) {
+//                $d = explode('=', $data);
+//                $form_data_assoc[$d[0]] = $d[1];
+//            }
 
 //            die(json_encode($form_data_assoc));
 
-            $clean_data = array_map( 'esc_html', $form_data_assoc );
+//            $clean_data = array_map( 'esc_html', $form_data_assoc );
 
 //            extract($clean_data);
 //            $errors = $this->validate_form;
@@ -50,9 +52,11 @@ class ZDFormsAjax {
 //            $errors['company_name']     = $this->val->text($company_name);
 //            $errors['contact_purpose']  = $this->val->select($contact_purpose, true);
 //            $errors['message']          = $this->val->text($message, true);
-//            foreach( $clean_data as $field => $type ) {
-//                $errors[$field] = $this->val->$type($field);
-//            }
+            foreach( $post_data as $field ) {
+                $type = esc_html($field['type']);
+                $is_required = isset($field['required']);
+                $errors[$field['name']] = $this->val->$type($field['value'], $is_required);
+            }
 
             foreach( $errors as $error ) {
                 if( $error ) {
@@ -68,7 +72,11 @@ class ZDFormsAjax {
                 )));
             }
             else {
-                if( $this->sender->send_message($clean_data) ) {
+                $message_data = array();
+                foreach( $post_data as $field ) {
+                    $message_data[$field['name']] = $field['value'];
+                }
+                if( $this->sender->send_message($message_data) ) {
                     @die(json_encode(array(
                         'sent' => true,
                         'errors' => false
