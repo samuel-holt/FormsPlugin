@@ -12,6 +12,7 @@ class FormHelper {
     private $form_slug;
     private $form_action;
     private $form_class;
+    private $is_ajax;
 
     public function __construct( $form_settings=null ) {
         $form_name = $form_action = $is_ajax = null;
@@ -33,7 +34,9 @@ class FormHelper {
 
         $this -> form_action = $form_action;
 
-        $this -> form_class = $is_ajax ? "zd-form-ajax" : "zd-form";
+        $this -> form_class = $is_ajax ? "zd-form zd-form-ajax" : "zd-form";
+
+        $this -> is_ajax = $is_ajax;
     }
 
     function start_form($echo=1) {
@@ -64,31 +67,14 @@ class FormHelper {
     }
 
     function get_input($args=array()) {
-        $echo = $html = $wrapper = $label_class = $id = $label = $type = $name = $wrapper_class = $placeholder = $form_name = $value = $options = $required = $error = $rows = $cols = $disabled = $input_class = $multiline = null;
+        $echo = $html = $wrapper = $label_class = $id = $label = $type = $name = $wrapper_class = $placeholder =
+        $form_name = $value = $options = $required = $error = $rows = $cols = $disabled = $input_class = $multiline =
+            $validate = null;
 
         $before = $after = '';
 
-        extract( $this->check_defaults(array(
-            'type'          => 'text',
-            'id'            => '',
-            'name'          => '',
-            'label'         => '',
-            'label_class'   => 'sr-only',
-            'value'         => '',
-            'input_class'   => '',
-            'wrapper'       => false,
-            'wrapper_class' => false,
-            'echo'          => false,
-            'placeholder'   => '',
-            'options'       => array(),
-            'required'      => false,
-            'error'         => false,
-            'rows'          => false,
-            'cols'          => false,
-            'disabled'      => false,
-            'multiline'     => false
-
-        ), $args) );
+        extract( $this->check_defaults(
+            Settings::get_form_defaults(), $args) );
 
         $form_name = $this->form_slug;
 
@@ -116,6 +102,12 @@ class FormHelper {
 
         // Strip all non-alphanumeric characters from the ID
         $_id = preg_replace("/[^A-Za-z0-9- ]/", '', $_id);
+        // If the label contains the word 'email', make the input type email
+        $contains_email = strpos( strtolower($label), "email" );
+
+        if( 'text' === $type && ($contains_email !== false) ) {
+            $type = 'email';
+        }
 
         //If the name is not set
         if( '' === $name ) {
@@ -124,20 +116,16 @@ class FormHelper {
 
             //if the form name has been provided,
             //Format the name as a property of the form name
-            if( '' !== $form_name  ) {
-                $_name = "{$form_name}[{$_name}]";
-            }
+//            if( '' !== $form_name  ) {
+//                $_name = "{$form_name}[{$_name}]";
+//            }
+//            $_name .= "[{$type}]";
+
         }
         else {
             $_name = $name;
         }
 
-        // If the label contains the word 'email', make the input type email
-        $contains_email = strpos( strtolower($label), "email" );
-
-        if( 'text' === $type && ($contains_email !== false) ) {
-            $type = 'email';
-        }
 
         // If the label class is still a string (ie. not false), format the class attr.
         $_label_class = is_string($label_class) ? " class=\"{$label_class}\"" : '';
@@ -146,14 +134,18 @@ class FormHelper {
         $_placeholder = ('' !== $placeholder) ? $placeholder : $label;
 
         // Add HTML5 required attribute if required
-        $_required = ($required) ? " required" : "";
+        $_required = ($required) ? " required aria-required=\"true\"" : "";
 
         $_disabled = $disabled ? " disabled" : "";
 
-        $_input_class = ('' !== $input_class) ? $input_class : '';
+//        $_input_class = ('' !== $input_class) ? $input_class : '';
+
+        if( $error !== false ) {
+            $input_class .= ' error';
+        }
 
         //Concatenate common attributes for reuse
-        $attributes = "class=\"{$_input_class}\" type=\"{$type}\" id=\"{$_id}\" name=\"{$_name}\"{$_required}{$_disabled}";
+        $attributes = "class=\"{$input_class}\" type=\"{$type}\" id=\"{$_id}\" name=\"{$_name}\"{$_required}{$_disabled}";
 
         //If the input type is not select or checkbox, add the placeholder attr.
         if( ! in_array( $type, array('select', 'checkbox' )) ) {
@@ -196,9 +188,9 @@ class FormHelper {
             $html .= "<input {$attributes} />\n";
         }
 
-        if( $error ) {
-            $html .= "<span id=\"{$id}-error\" class=\"error\">{$error}</span>\n";
-        }
+//        if( $error ) {
+        $html .= "<span id=\"{$id}-error\" class=\"error\">{$error}</span>\n";
+//        }
 
         $html .= $after;
 

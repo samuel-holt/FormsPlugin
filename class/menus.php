@@ -84,30 +84,38 @@ class ZDFormsMenus {
 
         }
         else {
-            $html .= "<div class=\"zdf-form-group sortable\">\n";
+            $html .= "<div data-id=\"0\" class=\"zdf-form-group sortable\">\n";
 
             $html .= $this->form->get_input(array(
                 'label' => 'Field name',
-                'id' => false
+                'id'    => 'field-name-0',
+                'name'  => 'field_name_0',
+                'class' => 'zdf-input'
             ));
 
             $html .= $this->form->get_input(array(
-                'label' => 'Field type',
-                'id' => false,
-                'type' => 'select',
-                'options' => array(
-                    'Textbox' => 'textarea',
-                    'Checkbox' => 'checkbox',
+                'label'     => 'Field type',
+                'id'        => 'field-type-0',
+                'name'      => 'field_type_0',
+                'type'      => 'select',
+                'class' => 'zdf-input field-type-select',
+                'options'   => array(
+                    'Text'              => 'text',
+                    'Email'             => 'email',
+                    'Textbox'           => 'textarea',
+                    'Checkbox'          => 'checkbox',
                     'Select (dropdown)' => 'select',
-                    'Radio' => 'radio',
-                    'Hidden' => 'hidden'
+                    'Radio'             => 'radio',
+                    'Hidden'            => 'hidden'
                 )
             ));
 
             $html .= $this->form->get_input(array(
                 'label' => 'Required',
-                'type' => 'checkbox',
-                'id' => false
+                'type'  => 'checkbox',
+                'id'    => 'required-0',
+                'name'  => 'required_0',
+                'class' => 'zdf-input',
             ));
 
             $html .= "</div>\n";
@@ -145,13 +153,30 @@ class ZDFormsMenus {
 
         $page_titles = get_option('page_titles') ? get_option('page_titles') : 'Contact us';
 
-        $form_pages = explode(',', $page_titles);
+        if( strpos($page_titles, ',') === false ) {
+            $page = get_page_by_title($page_titles);
 
-        foreach($form_pages as $form_page) {
-            $p = get_page_by_title($form_page);
-            if( $p->ID )
-                $display[] = $p->ID;
+            if( ! $page ) {
+                return;
+            }
+            else {
+                $display[] = $page->ID;
+            }
+
         }
+        else {
+            $form_pages = explode(',', $page_titles);
+
+            foreach($form_pages as $form_page) {
+                $p = get_page_by_title($form_page);
+                if( $p->ID )
+                    $display[] = $p->ID;
+            }
+
+        }
+
+
+
 
         if( in_array($post->ID, $display) ) {
             add_meta_box(

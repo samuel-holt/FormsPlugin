@@ -27,6 +27,9 @@
 
 define( 'ZDF_TEXT_DOMAIN', 'zdf' );
 
+require_once( plugin_dir_path( __FILE__ ) . 'class/options.php');
+require_once( plugin_dir_path( __FILE__ ) . 'class/validate.php');
+require_once( plugin_dir_path( __FILE__ ) . 'class/send.php');
 require_once( plugin_dir_path( __FILE__ ) . 'class/ajax.php');
 require_once( plugin_dir_path( __FILE__ ) . 'class/install.php');
 require_once( plugin_dir_path( __FILE__ ) . 'class/settings.php');
@@ -41,9 +44,11 @@ function zdf_init() {
 
 //    $form_helper = new FormHelper();
 
+//    $options = new ZDFormsOptions();
+
     new ZDFormsInstall();
     new ZDFormsMenus();
-    new ZDFormsSettings();
+//    new ZDFormsSettings();
     new ZDFormsBuild();
     new ZDFormsAjax;
     new ZDFormsShortcodes();

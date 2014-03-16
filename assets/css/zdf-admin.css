@@ -13,22 +13,24 @@
 /* line 15, ../scss/zdf-admin.scss */
 .zdf-form-group {
   margin: 10px 0;
-  display: inline-block;
+  display: block;
+  width: 60%;
 }
-/* line 20, ../scss/zdf-admin.scss */
+/* line 21, ../scss/zdf-admin.scss */
 .zdf-form-group.sortable {
   padding: 10px;
   background-color: #fff;
   border: 1px solid #ddd;
 }
 
-/* line 29, ../scss/zdf-admin.scss */
+/* line 30, ../scss/zdf-admin.scss */
 #sortable-inputs .sortable:hover {
   cursor: move;
 }
 
-/* line 35, ../scss/zdf-admin.scss */
-.remove-input {
+/* line 37, ../scss/zdf-admin.scss */
+.remove-input,
+.remove-option {
   display: inline-block;
   background-color: #D00;
   color: #FFF;
@@ -39,8 +41,9 @@
   text-decoration: none;
   border-radius: 7px;
 }
-/* line 46, ../scss/zdf-admin.scss */
-.remove-input:hover {
+/* line 48, ../scss/zdf-admin.scss */
+.remove-input:hover,
+.remove-option:hover {
   color: #fff;
   background-color: #f00;
 }
