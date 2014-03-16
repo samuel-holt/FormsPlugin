@@ -98,7 +98,7 @@ class ZDFormsMenus {
                 'id'        => 'field-type-0',
                 'name'      => 'field_type_0',
                 'type'      => 'select',
-                'class' => 'zdf-input',
+                'class' => 'zdf-input field-type-select',
                 'options'   => array(
                     'Text'              => 'text',
                     'Email'             => 'email',

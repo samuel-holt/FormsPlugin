@@ -67,30 +67,51 @@ var fieldCount = 1,
         return false;
     });
 
-    $(document).on('blur', 'input[id^="field-name"]', updateStorage);
-    $(document).on('click', 'input[id^="required"]', updateStorage);
+    $(document).on( 'blur', 'input[id^="field-name"]', updateStorage );
+    $(document).on( 'click', 'input[id^="required"]', updateStorage );
+    $(document).on( 'blur', '.zdf-option-group input[type="text"]', updateStorage )
 
     function updateStorage() {
-        var fieldData = [],
-            $ = window.jQuery;
+        var fieldData = [];
 
         $('#zdf_form_options').find('.zdf-form-group').each(function() {
-            var group = $(this),
-                groupId = group.attr('data-id'),
-                formGroupData = {
-                    'id': groupId,
-                    'formData': []
-                };
+            var group = $(this);
+//                groupId = group.attr('data-id'),
+//                formGroupData = [];
 
-            //            console.log( $this.find('.zd-input').length );
+//                console.log( $this.find('.zd-input').length );
 
-            group.find('.zdf-input').each(function() {
-                var input = $(this);
-                //                formGroupData.push($(this).val());
-                formGroupData.formData.push({
-                    'value': input.val()
+//            group.find('.zdf-input').each(function() {
+//                var input = $(this),
+//                    inputVal;
+//                //                formGroupData.push($(this).val());
+////                console.log( input.attr('type') );
+//                if( input.attr('type') === 'checkbox' ) {
+////                    console.log('is checkbox');
+//                    inputVal = input.is(':checked');
+//                }
+//                else {
+//                    inputVal = input.val();
+//                }
+//                formGroupData.push(inputVal);
+//            });
+
+            var fieldType = group.find('select[id^="field-type"]').val();
+
+            var formGroupData = [
+                group.find('input[id^="field-name"]').val(),
+                fieldType,
+                group.find('input[id^="required"]').is(':checked')
+            ];
+
+            if( 'select' === fieldType ) {
+//                formGroupData.push
+                var options = [];
+                group.find('.zdf-option-group').find('input[type="text"]').each(function(){
+                    options.push( $(this).val() );
                 });
-            });
+                formGroupData.push(options);
+            }
 
             fieldData.push(formGroupData);
 
@@ -119,29 +140,26 @@ var fieldCount = 1,
 
 
             for(var i=0; i < storedData.length; i++) {
-                var data = storedData[i],
-                    fieldId = data.id,
-                    fieldData = data.formData,
-                    setValues = [];
+//                var data = storedData[i];
 
 //                console.log(data.formData);
 
-                fieldGroups += '<div data-id="'+fieldId+'" class="zdf-form-group sortable">';
-                for( var field in fieldData ) {
-//                    console.log(fieldData[field]);
-                    var f = fieldData[field];
-                    setValues.push(f.value);
-//                    fieldGroups += FormBuilder.buildInput({
-//                        'label': fieldData[field].label,
-//                        'name': fieldData[field].name,
-//                        'value': fieldData[field].value,
-//                        'type': fieldData[field].type
-//                    });
-                }
-                fieldGroups += FormBuilder.inputBlock(setValues);
+//                fieldGroups += '<div data-id="'+fieldId+'" class="zdf-form-group sortable">';
+//                for( var field in fieldData ) {
+////                    console.log(fieldData[field]);
+//                    var f = fieldData[field];
+//                    setValues.push(f.value);
+////                    fieldGroups += FormBuilder.buildInput({
+////                        'label': fieldData[field].label,
+////                        'name': fieldData[field].name,
+////                        'value': fieldData[field].value,
+////                        'type': fieldData[field].type
+////                    });
+//                }
+                fieldGroups += FormBuilder.inputBlock(storedData[i]);
 
 
-                fieldGroups += '</div>';
+//                fieldGroups += '</div>';
 
             }
             storedInputs.html( fieldGroups );
@@ -176,6 +194,7 @@ var fieldCount = 1,
 //        addFieldToStorage( fieldCount );
 
             fieldCount ++;
+            updateStorage();
 //        Counter.addField();
 
             return false;
@@ -183,193 +202,6 @@ var fieldCount = 1,
     });
 
 })(jQuery);
-
-
-
-/*
-FormBuilder Class
- */
-var FormBuilder = {
-    buildInput: function( _args ) {
-        var html = '',
-            before = '',
-            after = '',
-            inputLabel = _args.hasOwnProperty('label') ? _args.label : 'Form label',
-            wrapper = _args.hasOwnProperty('wrapper') ? _args.wrapper : false,
-            additionalMarkup = _args.hasOwnProperty('additionalMarkup') ? _args.additionalMarkup : false,
-            inputType = _args.hasOwnProperty('type') ? _args.type : 'text',
-            inputName = _args.hasOwnProperty('name') ? _args.name : inputLabel.toLowerCase().replace(' ', '_')
-                + '_' + fieldCount,
-            inputId = _args.hasOwnProperty('id') ? _args.id : inputName.replace('_', '-'),
-            inputClass = _args.hasOwnProperty('class') ? 'zdf-input ' + _args.class : 'zd-input',
-            inputPlaceholder = _args.hasOwnProperty('placeholder') ? _args.placeholder : inputLabel,
-            inputValue = _args.hasOwnProperty('value') ? _args.value : '',
-            isButton = (inputType.search(/button|submit/) > -1);
-
-        if( wrapper ) {
-            before += '<' + wrapper + ' class="zdf-input-wrapper">';
-
-            if( additionalMarkup ) {
-                after += additionalMarkup;
-            }
-
-            after += '</' + wrapper + '>';
-        }
-
-        html += before;
-
-        // Don't show the label if it's a button
-        if( ! isButton ) {
-            html += '<label for="{id}">{label}</label>'.supplant({
-                id: inputId,
-                label: inputLabel
-            });
-        }
-
-        if( inputType.search(/text|email/) > -1 ) {
-            html += '<input type="text" name="{name}" id="{id}" class="{class}" placeholder="{placeholder}" value="{value}"{required} />'.supplant({
-                name:       inputName,
-                id:         inputId,
-                class:      inputClass,
-                placeholder:inputPlaceholder,
-                value:      inputValue,
-                required:   _args.required ? ' required aria-required="true"' : ''
-            });
-        }
-        else if( 'textarea' === inputType ) {
-            html += '<textarea name="{name}" id="{id}" class="{class}" placeholder="{placeholder}"{required}>{value}</textarea>'.supplant({
-                name:       inputName,
-                id:         inputId,
-                class:      inputClass,
-                placeholder:inputPlaceholder,
-                value:      inputValue,
-                required:   _args.required ? ' required aria-required="true"' : '',
-                rows:       _args.rows,
-                cols:       _args.cols
-            });
-        }
-        else if( 'select' === inputType ) {
-            html += '<select name="{name}" id="{id}" class="{class}">'.supplant({
-                name:       inputName,
-                id:         inputId,
-                class:      inputClass,
-                required:   _args.required ? ' required aria-required="true"' : ''
-            });
-
-            for( var option in _args.options ) {
-                html += '<option value="{value}">{optionName}</option>'.supplant({
-                    optionName: option,
-                    value: _args.options[option]
-                });
-            }
-            html += '</select>'
-        }
-        else if( inputType.search(/checkbox|radio/) > -1 ) {
-            html += '<input type="{type}" name="{name}" id="{id}" class="{class}"{checked}{required} />'.supplant({
-                type:       inputType,
-                name:       inputName,
-                id:         inputId,
-                class:      inputClass,
-                checked:    _args.checked ? ' checked' : '',
-                required:   _args.required ? ' required aria-required="true"' : ''
-            });
-        }
-        else if( 'hidden' === inputType ) {
-            html += '<input type="hidden" name="{name}" id="{id}" class="{class}" />'.supplant({
-                name:       inputName,
-                id:         inputId,
-                class:      inputClass
-            })
-        }
-        else if( isButton ) {
-            html += '<input type="{type}" name="{name}" id="{id}" class="{class}" value="{value}" />'.supplant({
-                type:       inputType,
-                name:       inputName,
-                id:         inputId,
-                class:      inputClass,
-                value:      _args.hasOwnProperty('value') ? _args.value : inputLabel
-            });
-        }
-
-        html += after;
-
-        return html;
-    },
-    inputBlock: function( _setValues ) {
-
-        if( _setValues === 'undefined' ) {
-            _setValues = ['','',''];
-        }
-        var html = '<div data-id="' + fieldCount + '" class="zdf-form-group sortable">';
-
-        html += this.buildInput({
-            'label': 'Field name',
-            'type': 'text',
-            'required': true,
-            'value': _setValues[0]
-        });
-        html += this.buildInput({
-            'label': 'Field type',
-            'type': 'select',
-            'class': 'field-type-select',
-            'options': {
-                'Text': 'text',
-                'Email': 'email',
-                'Textbox': 'textarea',
-                'Checkbox': 'checkbox',
-                'Select (dropdown)': 'select',
-                'Radio': 'radio',
-                'Hidden': 'hidden'
-            },
-            'required': false,
-            'value': _setValues[1]
-        });
-        html += this.buildInput({
-            'label': 'Required',
-            'type': 'checkbox',
-            'checked': false,
-            'required': false,
-            'value': _setValues[2]
-        });
-
-        html += '<a class="remove-input" href="#" title="Remove this form input">x</a>';
-
-        html += '</div><!--.zdf-form-group-->';
-
-        return html;
-    },
-    singleOption: function( showRemoveButton ) {
-        optionCount ++;
-//        Counter.addOption();
-        var removeButton = '<a class="remove-option" href="#" title="Remove this option">x</a>';
-
-        return this.buildInput({
-            'label': 'Option name',
-            'id': '',
-            'name': 'option_' + Counter.getOptionCount(),
-            'additionalMarkup': showRemoveButton ? removeButton : '',
-            'wrapper': 'p'
-        });
-
-//        return output;
-    },
-    optionBlock: function() {
-        var output = '<div class="zdf-option-group">';
-        output += this.singleOption(false);
-//        output += this.singleOption(true);
-//        output += this.singleOption(true);
-
-        output += this.buildInput({
-            'label': 'Add Option',
-            'type': 'button',
-            'class': 'zdf-add-option button button-default'
-        });
-
-        output += '</div><!--zdf-option-group-->';
-
-        return output;
-    }
-};
 
 String.prototype.supplant = function (o) {
     return this.replace(/{([^{}]*)}/g,

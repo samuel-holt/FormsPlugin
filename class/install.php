@@ -16,6 +16,14 @@ class ZDFormsInstall {
 
         add_action( 'wp_enqueue_scripts', array($this, 'zdf_load_client_assets') );
 
+        wp_register_script(
+            'zdf-form-builder',
+            plugins_url( '/assets/js/form-builder.js', dirname(__FILE__)),
+            array(),
+            '1.0.0',
+            true
+        );
+
 //        if( is_admin() ) {
 //        } else {
 //        }
@@ -33,7 +41,14 @@ class ZDFormsInstall {
         wp_enqueue_script( 'jquery-ui-sortable' );
 
         //Custom admin scripts
-        wp_enqueue_script( 'zdf-admin-script', plugins_url( '/assets/js/zdf-admin.js', dirname(__FILE__) ), array('jquery', 'jquery-ui-sortable'), '1.0.0', true );
+        wp_enqueue_script( 'zdf-form-builder' );
+        wp_enqueue_script(
+            'zdf-admin-script',
+            plugins_url( '/assets/js/zdf-admin.js', dirname(__FILE__) ),
+            array('jquery', 'jquery-ui-sortable', 'zdf-form-builder'),
+            '1.0.0',
+            true
+        );
     }
 
     function zdf_load_client_assets() {
