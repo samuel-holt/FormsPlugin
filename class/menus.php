@@ -84,30 +84,38 @@ class ZDFormsMenus {
 
         }
         else {
-            $html .= "<div class=\"zdf-form-group sortable\">\n";
+            $html .= "<div data-id=\"0\" class=\"zdf-form-group sortable\">\n";
 
             $html .= $this->form->get_input(array(
                 'label' => 'Field name',
-                'id' => false
+                'id'    => 'field-name-0',
+                'name'  => 'field_name_0',
+                'class' => 'zdf-input'
             ));
 
             $html .= $this->form->get_input(array(
-                'label' => 'Field type',
-                'id' => false,
-                'type' => 'select',
-                'options' => array(
-                    'Textbox' => 'textarea',
-                    'Checkbox' => 'checkbox',
+                'label'     => 'Field type',
+                'id'        => 'field-type-0',
+                'name'      => 'field_type_0',
+                'type'      => 'select',
+                'class' => 'zdf-input',
+                'options'   => array(
+                    'Text'              => 'text',
+                    'Email'             => 'email',
+                    'Textbox'           => 'textarea',
+                    'Checkbox'          => 'checkbox',
                     'Select (dropdown)' => 'select',
-                    'Radio' => 'radio',
-                    'Hidden' => 'hidden'
+                    'Radio'             => 'radio',
+                    'Hidden'            => 'hidden'
                 )
             ));
 
             $html .= $this->form->get_input(array(
                 'label' => 'Required',
-                'type' => 'checkbox',
-                'id' => false
+                'type'  => 'checkbox',
+                'id'    => 'required-0',
+                'name'  => 'required_0',
+                'class' => 'zdf-input',
             ));
 
             $html .= "</div>\n";
